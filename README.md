@@ -1,5 +1,5 @@
-# Interpreting the Drive: Agent-driven Data Fusion for Complex Driving Scenarios
-This repository contains the official implementation and instructions to reproduce the experiments presented in our paper, "Interpreting the Drive: Agent-driven Data Fusion for Complex Driving Scenarios"
+# Interpreting the Drive: Agent-driven Exploratory Multimodal Querying for Complex Driving Scenarios
+This repository contains the official implementation and instructions to reproduce the experiments presented in our paper, "Interpreting the Drive: Agent-driven Exploratory Multimodal Querying for Complex Driving Scenarios"
 
 This guide will walk you through setting up the dataset, building the DriveMMKG, and performing natural language queries using our agentic framework.
 
