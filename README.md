@@ -1,5 +1,4 @@
-# Interpreting the Drive: Agent-driven Exploratory Multimodal Querying for Complex Driving Scenarios
-This repository contains the official implementation and instructions to reproduce the experiments presented in our paper, "Interpreting the Drive: Agent-driven Exploratory Multimodal Querying for Complex Driving Scenarios"
+# CSE 6521: Multimodal Data Management with Large Language Models
 
 This guide will walk you through setting up the dataset, building the DriveMMKG, and performing natural language queries using our agentic framework.
 
