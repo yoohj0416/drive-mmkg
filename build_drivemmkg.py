@@ -5,11 +5,11 @@ from neo4j import GraphDatabase, Driver, Session
 
 from cfg import GeneralCfg
 
-# --- Environment and Database Configuration ---
-URI = os.getenv("NEO4J_URI")
-AUTH = ("neo4j", os.getenv("NEO4J_PASSWORD"))
+# --- Environment and Database Configuration (Memgraph) ---
+URI = os.getenv("MEMGRAPH_URI", "bolt://localhost:7687")
+AUTH = (os.getenv("MEMGRAPH_USERNAME", ""), os.getenv("MEMGRAPH_PASSWORD", ""))
 
-# --- Helper Functions for Neo4j Operations ---
+# --- Helper Functions for Memgraph Operations ---
 
 def create_scene_node(session: Session, scene_id: str, scene_number: int, start_time: float, end_time: float):
     """Creates a Scene node in the graph."""
@@ -83,7 +83,7 @@ def segment_actions_into_scenes(goal_action: np.ndarray, cause_action: np.ndarra
 # --- Session Processing Function ---
 
 def process_and_load_session(driver: Driver, cfg: GeneralCfg, session_name: str):
-    """Loads all data for a single session, processes it, and populates the Neo4j graph."""
+    """Loads all data for a single session, processes it, and populates the Memgraph graph."""
     print(f"\nProcessing session: {session_name}")
     
     # --- 1. Load All Data Types ---
@@ -104,9 +104,9 @@ def process_and_load_session(driver: Driver, cfg: GeneralCfg, session_name: str)
     for key, meta in cfg.sensor_metadata.items():
         sensor_vectors[key] = sensor_data[:, meta["col"]]
 
-    # --- 4. Populate Neo4j Graph ---
+    # --- 4. Populate Memgraph Graph ---
     trip_id = session_name
-    with driver.session(database="neo4j") as session:
+    with driver.session() as session:
         # Clear existing data for this trip_id
         session.run("MATCH (t:Trip {id: $trip_id}) DETACH DELETE t", trip_id=trip_id)
         print(f"Cleared existing data for Trip ID: {trip_id}")
@@ -116,7 +116,7 @@ def process_and_load_session(driver: Driver, cfg: GeneralCfg, session_name: str)
     for i, scene_data in enumerate(scenes):
         scene_id = f"{trip_id}_SCENE_{i}"
         
-        with driver.session(database="neo4j") as session:
+        with driver.session() as session:
             # Create Scene node and link to Trip and previous Scene
             create_scene_node(session, scene_id, i, scene_data["startTimeInSec"], scene_data["endTimeInSec"])
             session.run("MATCH (t:Trip {id: $trip_id}), (s:Scene {sceneId: $scene_id}) CREATE (t)-[:PART_OF]->(s)", trip_id=trip_id, scene_id=scene_id)
@@ -162,11 +162,11 @@ def process_and_load_session(driver: Driver, cfg: GeneralCfg, session_name: str)
 # --- Main Execution Logic ---
 
 def main():
-    """Iterates through all sessions, processes them, and creates a graph in Neo4j."""
+    """Iterates through all sessions, processes them, and creates a graph in Memgraph."""
     cfg = GeneralCfg()
     with GraphDatabase.driver(URI, auth=AUTH) as driver:
         driver.verify_connectivity()
-        print("Successfully connected to Neo4j.")
+        print("Successfully connected to Memgraph.")
         for session_name in tqdm(cfg.validation_session_set, desc="Processing all sessions"):
             process_and_load_session(driver, cfg, session_name)
     print("\nGraph creation for all sessions is complete.")
