@@ -117,6 +117,10 @@ python do_query_kg.py \
 ## Output
 - Prediction results are saved to `pred/results_kg_<model>.json`.
 
+## License
+- Code in this repository is licensed under Apache-2.0. See `LICENSE`.
+- Dataset files and derivatives are subject to upstream BDD-X terms. See `DATA_LICENSE.md` and `THIRD_PARTY_NOTICES.md`.
+
 ## Dataset Attribution
 If you redistribute a modified dataset, include:
 - The original source link: https://github.com/JinkyuKimUCB/BDD-X-dataset
