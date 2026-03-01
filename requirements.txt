@@ -1,0 +1,5 @@
+ollama
+pydantic
+memgraph-toolbox
+neo4j
+tqdm
