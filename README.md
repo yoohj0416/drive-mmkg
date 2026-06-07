@@ -49,7 +49,7 @@ ollama serve
 Then use another terminal for `build_kg.py` and `do_query_kg.py` commands.
 
 ## 4) Download Dataset Files
-You can download the data from [Google Drive](https://drive.google.com/file/d/1V16vDW0bANHlMxSiL7I1DX0Hr8ga9aVq/view?usp=sharing) and place files under `data/`.
+You can download the data from [HuggingFace Dataset Page](https://huggingface.co/datasets/yoohj0416/drive-mmkg) and place files under `data/`.
 
 Original dataset source:
 - BDD-X dataset repository: https://github.com/JinkyuKimUCB/BDD-X-dataset
@@ -71,7 +71,7 @@ data/
   textual_kg/
     *.json
   id_mapping.json
-  queries_gemini.json
+  queries.json
 ```
 
 Notes:
